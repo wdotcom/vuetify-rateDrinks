@@ -62,14 +62,33 @@
               </template>
             </q-input>
           </div>
-          <q-input
-            v-model="formData.partyTime"
-            placeholder="Time of the party"
-            counter
-            type="text"
-            maxlength="15"
-          />
 
+          Time:
+          <div class="q-gutter-md row items-start">
+            <q-input filled v-model="formData.partyTime" :rules="['time']">
+              <template v-slot:append>
+                <q-icon name="schedule" class="cursor-pointer">
+                  <q-popup-proxy
+                    ref="null"
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-time v-model="formData.partyTime" mask="h:mm a">
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-time>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
           <q-input
             autogrow
             class="new-party"
@@ -113,6 +132,7 @@ export default defineComponent({
   name: "PageCreateParty",
   data() {
     return {
+      model1: ref("01:51 PM"),
       partyID: "",
       formData: {
         partyName: "",
@@ -121,7 +141,8 @@ export default defineComponent({
         inProgress: ref("notStarted"),
         partyTime: "",
       },
-      date: ref("2022/07/01"),
+      date: ref(null),
+      partyTime: ref(null),
       group: ref("notStarted"),
 
       options: [

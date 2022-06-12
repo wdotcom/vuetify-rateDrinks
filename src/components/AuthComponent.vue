@@ -105,101 +105,15 @@ export default {
       },
       //userID: this.uid,
       resetPwdDialog: false,
-      clickCount: 2,
     };
   },
-  mounted() {
-    if (this.$q.localStorage.getItem("storedID") != "") {
-      this.$router.push("/showParties");
-    } else {
-    }
-  },
+
   methods: {
     handleAuthStateChanged() {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           const userId = user.uid;
-          //  $q.localStorage.set("storedID", userId);
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-
-          //I don't think I need this section.
-          /*
-          const dbRef = ref(getDatabase());
-          get(child(dbRef, `users/${this.userID}`))
-            .then((snapshot) => {
-              if (snapshot.exists()) {
-                console.log("snapshot:", snapshot.val());
-                //const userId = (snapshot.val() && snapshot.val().uid) || "";
-                const name =
-                  (snapshot.val() && snapshot.val().name) || "Anonymous";
-                const email =
-                  (snapshot.val() && snapshot.val().email) || "NoEmail";
-                const online =
-                  (snapshot.val() && snapshot.val().online) || "false";
-                console.log("Name", name);
-              } else {
-                console.log("No data available");
-              }
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-            */
-          //////
-          /*
-          return onValue(
-            ref(database, "/users/" + userId),
-            (snapshot) => {
-              const name =
-                (snapshot.val() && snapshot.val().name) || "Anonymous";
-              const email =
-                (snapshot.val() && snapshot.val().email) || "NoEmail";
-              const online =
-                (snapshot.val() && snapshot.val().online) || "false";
-              // ...
-            },
-            {
-              onlyOnce: true,
-            }
-          );*/
-          //this.$router.push("/users");
-
-          /*Experiment:
-          dispatchEvent("firebaseUpdateUser", {
-            userId: "fakeUserId",
-            updates: {
-              online: true,
-            },
-          }); */
-          /*
-          const updates = {};
-          //updates["/posts/" + newPostKey] = postData;
-          updates["/users/" + this.userID + "/online"] = false;
-
-          return update(ref(database), updates);*/
-
-          // ...
         } else {
-          // User is signed out
-          /*     const updates = {};
-          //updates["/posts/" + newPostKey] = postData;
-          updates["/users/" + this.userID + "/online"] = false;
-
-          return update(ref(database), updates)
-            .then((snapshot) => {
-              //  if (snapshot.exists()) {
-              console.log("snapshot:", snapshot);
-              const name = "";
-              const email = "";
-              const online = "";
-              // } else {
-              // console.log("No data available");
-              // }
-            })
-            .catch((error) => {
-              console.error(error);
-            });*/
         }
       });
     },

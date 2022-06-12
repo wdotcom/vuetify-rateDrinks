@@ -1,12 +1,4 @@
 <template>
-  <!--
-  <q-footer elevated>
-    <q-toolbar>
-      <q-btn icon="add_circle" label="Party" to="/createParty" />
-      <q-space />
-      <q-btn icon="help" click="openHelp" />
-    </q-toolbar>
-  </q-footer> -->
   <q-page class="q-pa-xs constrain-more">
     <div class="full-width">
       <!--All Parties----------------------------------------->
@@ -501,6 +493,9 @@ export default {
       updateDoc(doc(db, "Parties", party.id), {
         pendingIDs: arrayUnion(myId),
         pendingPartiers: arrayUnion(myName),
+      });
+      this.$q.notify({
+        message: "Your request to attend this party has been sent to the host.",
       });
     },
     notifyBeforeDeleteParty(party) {
