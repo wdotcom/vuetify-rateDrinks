@@ -372,6 +372,7 @@ import {
   where,
   doc,
   setDoc,
+  getDocs,
   deleteDoc,
   updateDoc,
   onSnapshot,
@@ -500,7 +501,6 @@ export default {
     },
     notifyBeforeDeleteParty(party) {
       this.$q.notify({
-        type: "negative",
         message: "Are you sure you want to delete? This cannot be undone.",
         avatar: "https://cdn.quasar.dev/img/boy-avatar.png",
         actions: [
@@ -563,9 +563,35 @@ export default {
   },
   mounted() {
     this.storedID = this.$q.localStorage.getItem("storedID");
-    const myPendingParties = query(
-      collection(db, "users", this.storedID, "Parties")
+
+    const pendingPartiers = query(
+      collection(db, "Parties"),
+      where("hostID", "==", this.storedID),
+      where("pendingPartiers", "!=", "")
     );
+
+    onSnapshot(pendingPartiers, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        let pendingPartiersChange = change.doc.data();
+        pendingPartiersChange.id = change.doc.id;
+        if (change.type === "added") {
+          if (pendingPartiersChange.pendingPartiers != "") {
+            this.$q.notify({
+              message: `You have partiers requesting access to ${pendingPartiersChange.name}. Please enter the party, click on the down arrow beside 'Partiers' so you can approve or deny them.`,
+              actions: [
+                {
+                  label: "Dismiss",
+                  color: "white",
+                  handler: () => {
+                    /* ... */
+                  },
+                },
+              ],
+            });
+          }
+        }
+      });
+    });
 
     const Parties = query(collection(db, "Parties"), orderBy("date", "asc"));
     const attendingParties = query(

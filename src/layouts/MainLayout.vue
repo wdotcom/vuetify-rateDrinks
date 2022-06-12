@@ -48,20 +48,18 @@
           v-if="$route.fullPath.includes('/showParty')"
           icon="add_circle"
           label="Drink"
+          flat
           to="/createDrink"
         />
         <q-btn
           v-if="$route.fullPath.includes('/showParties')"
           icon="add_circle"
           label="Party"
+          flat
           to="/createParty"
         />
         <q-space />
-        <q-btn
-          icon="help"
-          v-if!="$route.fullPath.includes('/showParties')"
-          @click="openHelp"
-        />
+        <q-btn icon="help" flat @click="openHelp" />
       </q-toolbar>
     </q-footer>
 
@@ -100,7 +98,7 @@ export default {
     },
     openHelp() {
       this.$q.sessionStorage.set("currentPage", this.$route.fullPath);
-      console.log("route name :", this.$route.fullPath);
+
       this.$router.push("/help");
     },
     logoutUser() {
