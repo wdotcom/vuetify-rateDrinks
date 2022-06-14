@@ -1,6 +1,6 @@
 <template>
-  <q-page class="q-pa-xs constrain-more">
-    <div class="full-width">
+  <q-page class="q-pa-md">
+    <div class="row q-col-gutter-lg">
       <!--All Parties----------------------------------------->
       <template v-if="tab === 'allParties'">
         <q-list class="full-width" separator>
