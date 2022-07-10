@@ -132,7 +132,6 @@ export default defineComponent({
   name: "PageCreateParty",
   data() {
     return {
-      model1: ref("01:51 PM"),
       partyID: "",
       formData: {
         partyName: "",

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex q-pa-md constrain-more">
+  <q-page class="flex constrain-more">
     <q-card class="full-width">
       <q-tabs
         v-model="tab"

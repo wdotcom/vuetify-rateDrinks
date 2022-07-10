@@ -2,7 +2,7 @@
   "name": "ratedrinks",
   "version": "0.2.8",
   "description": "Rate the drinks brought to the party!",
-  "productName": "Rate My Drinks",
+  "productName": "Rate Your Drinks",
   "author": "Sandi Berg <bsdemonstrators@gmail.com>",
   "private": true,
   "scripts": {
@@ -10,11 +10,12 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
-    "cordova": "^11.0.0",
+    "cordova": "^5.3.3",
     "core-js": "^3.6.5",
     "date-fns": "^2.28.0",
     "firebase": "^9.6.11",
     "gradle": "^1.2.4",
+    "md-gum-polyfill": "^1.0.0",
     "pinia": "^2.0.13",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
@@ -22,7 +23,7 @@
   },
   "devDependencies": {
     "@quasar/app-webpack": "^3.0.0",
-    "electron": "^19.0.1",
+    "electron": "^6.1.12",
     "electron-packager": "^15.5.1",
     "workbox-webpack-plugin": "^6.5.3"
   },

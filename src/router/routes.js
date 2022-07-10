@@ -12,7 +12,11 @@ const routes = [
         component: () => import("src/pages/Auth.vue"),
         //meta: { requiresUnauth: true },
       },
-
+      {
+        path: "/camera",
+        component: () => import("src/pages/pageCamera.vue"),
+        //meta: { requiresUnauth: true },
+      },
       {
         path: "/showParties",
         component: () => import("src/pages/pageShowParties.vue"),

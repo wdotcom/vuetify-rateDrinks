@@ -1,6 +1,6 @@
 <template>
-  <q-page class="q-pa-md">
-    <div class="row q-col-gutter-lg">
+  <q-page>
+    <div class="row">
       <div class="col-sm-8">
         <div class="text-h5">
           <q-icon name="liquor" />
@@ -23,7 +23,7 @@
           <q-badge v-else label="GUEST" color="light-blue" />
         </div>
         <div class="text-overline q-pb-sm">
-          <q-icon name="support_agent" size="30px" class="q-pr-sm" />{{
+          <q-icon name="support_agent" size="20px" class="q-pr-sm" />{{
             this.partyHost
           }}
         </div>
@@ -34,17 +34,17 @@
           </div>
         </div>
         <div class="q-pb-md">
-          <q-icon size="30px" name="event" />{{ this.partyDate }}
+          <q-icon size="20px" name="event" />{{ this.partyDate }}
 
           <q-icon
-            size="30px"
+            size="20px"
             class="q-pl-lg"
             color="grey-8"
             name="access_time"
           />{{ this.partyTime }}
         </div>
 
-        <q-icon size="30px" name="people" class="q-pr-md" /> Partiers
+        <q-icon size="20px" name="people" class="q-pr-md" /> Partiers
 
         <q-btn
           color="grey"
@@ -108,90 +108,19 @@
         <q-separator />
 
         <div class="bg-grey-5">
-          <q-icon name="wine_bar" size="30px" />
+          <q-icon name="wine_bar" size="20px" />
           <strong>Drink Up!</strong>
         </div>
 
-        <div>
-          <q-list separator>
-            <q-item v-for="drink in drinks" :key="drink.id">
-              <div class="row">
-                <div class="col-12">
-                  <div v-if="drink.edit === false" class="q-pb-lg">
-                    <div
-                      v-if="
-                        drink.display == true ||
-                        this.amHost ||
-                        drink.supplierId == this.storedID
-                      "
-                    >
-                      <q-item-label
-                        ><q-icon
-                          name="liquor"
-                          size="20px"
-                          class="q-pr-sm"
-                        /><strong>{{ drink.name }}</strong></q-item-label
-                      >
-                      <q-item-label>by {{ drink.supplier }}</q-item-label>
-                      <q-item-label class="q-pt-md"
-                        ><strong>Description</strong></q-item-label
-                      >
-                      <q-item-label>{{ drink.description }}</q-item-label>
-                    </div>
-                    <div v-else>
-                      Shhh! {{ drink.supplier }} is keeping this drink a secret!
-                    </div>
-                  </div>
-
-                  <div v-else class="q-pb-sm">
-                    <q-input filled v-model="drink.name" label="Drink Name">
-                      <template v-slot:before>
-                        <q-icon name="liquor" />
-                      </template>
-                    </q-input>
-
-                    <q-input
-                      filled
-                      v-model="drink.description"
-                      label="Drink Description"
-                    >
-                      <template v-slot:before>
-                        <q-icon name="description" />
-                      </template>
-                    </q-input>
-                  </div>
-
-                  <div class="col-12" v-show="this.amHost">
-                    <strong>Activate Drink: </strong>
-                    <q-btn
-                      flat
-                      dense
-                      size="15px"
-                      @click="displayDrink(drink)"
-                      :icon="drink.display ? 'toggle_on' : 'toggle_off'"
-                      :color="drink.display ? 'light-green-5' : 'grey-4'"
-                    />
-                  </div>
-                  <div>
-                    <q-btn
-                      v-show="this.amHost || drink.supplierId == this.storedID"
-                      flat
-                      rounded
-                      color="green"
-                      size="md"
-                      :icon="drink.display ? 'visibility' : 'visibility_off'"
-                      @click="activateDrink(drink)"
-                    />
-                    <q-btn
-                      v-if="drink.display === true && drink.display === true"
-                      flat
-                      rounded
-                      color="green"
-                      size="md"
-                      icon="thumbs_up_down"
-                      @click="rateDrink(drink)"
-                    />
-                  </div>
+        <div class="q-ml-sm q-mr-sm">
+          <q-card
+            v-for="drink in drinks"
+            :key="drink.id"
+            class="q-pl-sm q-pr-sm q-mt-md q-mb-md"
+          >
+            <q-card-section horizontal>
+              <div class="col-10 q-pl-xs">
+                <div v-if="drink.edit === false" class="q-pb-lg">
                   <div
                     v-if="
                       drink.display == true ||
@@ -199,49 +128,128 @@
                       drink.supplierId == this.storedID
                     "
                   >
-                    <div class="col-12">
-                      <strong>Avg Rating: </strong
-                      >{{
-                        drink.numRatings > 0 ? drink.ratingAvg : "No Ratings"
-                      }}
-                    </div>
+                    <q-item-label
+                      ><q-icon
+                        name="liquor"
+                        size="20px"
+                        class="q-pr-sm"
+                      /><strong>{{ drink.name }}</strong></q-item-label
+                    >
+                    <q-item-label>by {{ drink.supplier }}</q-item-label>
+                    <q-item-label class="q-pt-md"
+                      ><strong>Description</strong></q-item-label
+                    >
+                    <q-item-label>{{ drink.description }}</q-item-label>
                   </div>
-                  <div v-else></div>
+                  <div v-else>
+                    <strong>Shhh!</strong> <br />
+                    {{ drink.supplier }} is keeping this drink a secret!
+                  </div>
+                </div>
+                <div v-else class="q-pb-sm">
+                  <q-input filled v-model="drink.name" label="Drink Name">
+                    <template v-slot:before>
+                      <q-icon name="liquor" />
+                    </template>
+                  </q-input>
 
-                  <div
-                    v-show="this.amHost || drink.supplierId == this.storedID"
+                  <q-input
+                    filled
+                    autogrow
+                    type="textarea"
+                    v-model="drink.description"
+                    label="Drink Description"
                   >
+                    <template v-slot:before>
+                      <q-icon name="description" />
+                    </template>
+                  </q-input>
+                </div>
+                <div>
+                  <strong>Drink Avg: </strong
+                  >{{ drink.numRatings > 0 ? drink.ratingAvg : "No Ratings" }}
+                </div>
+                <div></div>
+              </div>
+              <q-separator vertical />
+
+              <q-card-actions vertical>
+                <div v-if="!this.amHost">
+                  <q-icon
+                    v-if="
+                      drink.supplierId != this.storedID &&
+                      drink.display === false
+                    "
+                    size="20px"
+                    color="grey-8"
+                    name="visibility_off"
+                  />
+                </div>
+                <div>
+                  <q-btn
+                    flat
+                    rounded
+                    size="md"
+                    icon="thumbs_up_down"
+                    :color="drink.currentDrink ? 'green' : 'grey-4'"
+                    :disabled="drink.currentDrink ? false : true"
+                    @click="rateDrink(drink)"
+                  />
+                </div>
+                <div v-show="this.amHost">
+                  <div class="text-caption">
+                    Active:
                     <q-btn
-                      v-if="drink.edit === false"
                       flat
-                      color="grey-9"
-                      icon="edit"
-                      size="md"
-                      @click="editDrink(drink)"
-                    />
-                    <q-btn
-                      v-else
-                      flat
-                      size="md"
-                      icon="save"
-                      color="grey-9"
-                      @click="saveDrink(drink)"
-                    /><q-btn
-                      icon="delete"
-                      @click="notifyBeforeDeleteDrink(drink)"
-                      align="right"
-                      flat
-                      color="red"
+                      dense
+                      size="15px"
+                      @click="activateDrink(drink)"
+                      :icon="drink.currentDrink ? 'toggle_on' : 'toggle_off'"
+                      :color="drink.currentDrink ? 'light-green-5' : 'grey-4'"
                     />
                   </div>
                 </div>
-              </div>
-            </q-item>
-          </q-list>
+                <div v-show="this.amHost || drink.supplierId == this.storedID">
+                  <q-btn
+                    flat
+                    rounded
+                    color="green"
+                    size="md"
+                    :icon="drink.display ? 'visibility' : 'visibility_off'"
+                    @click="displayDrink(drink)"
+                  />
+
+                  <q-btn
+                    v-if="drink.edit === false"
+                    flat
+                    color="grey-9"
+                    icon="edit"
+                    size="md"
+                    @click="editDrink(drink)"
+                  />
+                  <q-btn
+                    v-else
+                    flat
+                    size="md"
+                    icon="save"
+                    color="grey-9"
+                    @click="saveDrink(drink)"
+                  /><q-btn
+                    icon="delete"
+                    @click="notifyBeforeDeleteDrink(drink)"
+                    align="right"
+                    flat
+                    color="red"
+                  />
+                </div>
+              </q-card-actions>
+            </q-card-section>
+          </q-card>
+          <!--------------------------------------------------------------------------->
         </div>
       </div>
       <div class="col-4 large-screen-only bg-grey-4">
-        <div class="fixed">
+        <div class="q-ml-sm">
           <div>
             <strong>MY RATINGS</strong>
           </div>
@@ -384,12 +392,18 @@ export default {
         name: drink.name,
       });
     },
-    displayDrink(drink) {
-      updateDoc(doc(db, "Parties", this.partyID, "Drinks", drink.id), {
-        display: !drink.display,
-      });
-    },
     activateDrink(drink) {
+      updateDoc(doc(db, "Parties", this.partyID, "Drinks", drink.id), {
+        currentDrink: !drink.currentDrink,
+      });
+      if (drink.display === false) {
+        updateDoc(doc(db, "Parties", this.partyID, "Drinks", drink.id), {
+          display: true,
+        });
+        this.$q.notify("Drink information is now viewable to all partiers.");
+      }
+    },
+    displayDrink(drink) {
       updateDoc(doc(db, "Parties", this.partyID, "Drinks", drink.id), {
         display: !drink.display,
       });
@@ -484,7 +498,7 @@ export default {
     );
     const drinks = query(
       collection(db, "Parties", this.partyID, "Drinks"),
-      orderBy("name", "asc")
+      orderBy("ratingAvg", "asc")
     );
     // const unsubscribe =
     onSnapshot(drinks, (snapshot) => {

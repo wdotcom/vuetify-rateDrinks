@@ -2,9 +2,6 @@
   <q-page class="q-pa-md">
     <div class="row">
       <div class="col-12 col-sm-8">
-        <!--<div class="q-pa-md row items-start q-gutter-md">
-      <q-card class="my-card" flat bordered>
-        <q-card-section class="q-pl-md">-->
         <div class="text-h5 q-mt-sm q-mb-xs">
           <q-icon name="liquor" />
           {{ this.drinkName }}
@@ -23,9 +20,10 @@
         <div class="q-pa-md">
           <q-form @submit="submitRating" class="q-gutter-md">
             <q-input
-              standout
-              bottom-slots
-              type="number"
+              maxlength="3"
+              clearable
+              clear-icon="close"
+              style="max-width: 200px"
               v-model.number="formData.myRating"
             >
               <template v-slot:before>
@@ -41,7 +39,7 @@
                   flat
                   icon="save"
                   type="submit"
-                  color="primary"
+                  color="green"
                   @click="submitRating(this.formData.myRating)"
                 />
               </template>
@@ -211,6 +209,10 @@ export default defineComponent({
               value: formMyRating,
             }
           );
+          this.$q.notify({
+            message:
+              "Your rating has been added. Use the back button to return to the party.",
+          });
         } else {
           this.calc1 = this.numRatings * this.avgRating;
           this.calc2 = this.calc1 + formMyRating;
@@ -269,9 +271,12 @@ export default defineComponent({
               value: formMyRating,
             }
           );
+          this.$q.notify({
+            message:
+              "Your rating has been updated. Use the back button to return to the party.",
+          });
         }
       });
-      this.$router.push("/showParty");
     },
 
     /////////////////////////////////////////////////
